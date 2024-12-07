@@ -4,10 +4,20 @@ import 'package:coursework1_partb_mad/services/article_controller.dart';
 import 'package:coursework1_partb_mad/widgets/newscard.dart';
 import 'package:coursework1_partb_mad/view/homepage.dart';
 import 'view/newsdetails_view.dart';
+import 'package:coursework1_partb_mad/providers/news_provider.dart';
+import 'package:provider/provider.dart';
+
 
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => NewsProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +43,7 @@ class MyApp extends StatelessWidget {
               body: Center(child: Text('Failed to load articles: ${snapshot.error}')),
             );
           }  else {
-            return HomePage(articles: snapshot.data!); // Pass the fetched articles
+            return HomePage(articles: snapshot.data!);
           }
         },
       ),

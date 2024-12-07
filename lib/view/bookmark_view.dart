@@ -4,14 +4,14 @@ import 'package:coursework1_partb_mad/Model/article_model.dart';
 import 'package:coursework1_partb_mad/widgets/newscard.dart';
 
 class BookmarksPage extends StatelessWidget {
-  final BookmarkController _bookmarkController = BookmarkController();
+  final BookmarkController bookmarkController = BookmarkController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('BookMarks')),
       body: FutureBuilder<List<Article>>(
-        future: _bookmarkController.getBookmarks(),
+        future: bookmarkController.getBookmarks(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

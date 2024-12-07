@@ -13,13 +13,13 @@ class CategoryNewsPage extends StatefulWidget {
 }
 
 class CategoryNewsPageState extends State<CategoryNewsPage> {
-  late Future<List<Article>> _articlesFuture;
+  late Future<List<Article>> articles;
   final ApiService _apiService = ApiService();
 
   @override
   void initState() {
     super.initState();
-    _articlesFuture = _apiService.getCatagoryArticles(widget.categoryName);
+    articles = _apiService.getCatagoryArticles(widget.categoryName);
   }
 
   @override
@@ -29,7 +29,7 @@ class CategoryNewsPageState extends State<CategoryNewsPage> {
         title: Text('${widget.categoryName} News'),
       ),
       body: FutureBuilder<List<Article>>(
-        future: _articlesFuture,
+        future: articles,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

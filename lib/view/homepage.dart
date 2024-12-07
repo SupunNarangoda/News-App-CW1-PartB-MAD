@@ -5,47 +5,33 @@ import 'bookmark_view.dart';
 import 'package:coursework1_partb_mad/view/search_view.dart';
 import 'package:coursework1_partb_mad/view/category_view.dart';
 import 'package:coursework1_partb_mad/view/catogorygrid_view.dart';
+import 'package:provider/provider.dart';
+import 'package:coursework1_partb_mad/providers/news_provider.dart';
 
-
-
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   final List<Article> articles;
   const HomePage({super.key, required this.articles});
 
   @override
-  State<HomePage> createState() => HomePageState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => NewsProvider()..initializeArticles(articles),
+      child: HomePageChild(),
+    );
+  }
 }
 
-class HomePageState extends State<HomePage> {
-  int currentIndex = 0;
-  late List<Article> _displayedArticles;
 
-  @override
-  void initState() {
-    super.initState();
-    _displayedArticles = widget.articles; // Initialize articles
-  }
-
-  // Sorting logic
-  void _sortArticles(String criteria) {
-    setState(() {
-      if (criteria == 'Alphabetical') {
-        _displayedArticles.sort((a, b) => a.title.compareTo(b.title));
-      } else if (criteria == 'Newest') {
-        _displayedArticles.sort((a, b) => b.publishedAt.compareTo(a.publishedAt));
-      } else if (criteria == 'Oldest') {
-        _displayedArticles.sort((a, b) => a.publishedAt.compareTo(b.publishedAt));
-      }
-    });
-  }
-
+class HomePageChild extends StatelessWidget {
 
   final List<String> sortOptions = ['Alphabetical', 'Newest', 'Oldest'];
 
   @override
   Widget build(BuildContext context) {
+    final newsProvider = Provider.of<NewsProvider>(context);
+
     List<Widget> pages = [
-      _buildNewsList(),
+      _buildNewsList(context),
       BookmarksPage(),
       // SearchPage(articles: widget.articles),
       SearchPage(),
@@ -55,13 +41,13 @@ class HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      body: pages[currentIndex],
+      body: pages[newsProvider.currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => currentIndex = index),
-        backgroundColor: Colors.black, // Set the background color to black
-        selectedItemColor: Colors.grey, // Set selected item color for contrast
-        unselectedItemColor: Colors.grey, // Set unselected item color for visibility
+        currentIndex: newsProvider.currentIndex,
+        onTap: (index) => newsProvider.updateCurrentIndex(index),
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Bookmarks'),
@@ -73,7 +59,8 @@ class HomePageState extends State<HomePage> {
   }
 
 
-  Widget _buildNewsList() {
+  Widget _buildNewsList(context) {
+    final newsProvider = Provider.of<NewsProvider>(context);
     return CustomScrollView(
       slivers: [
         SliverAppBar(
@@ -92,7 +79,7 @@ class HomePageState extends State<HomePage> {
                 ],
               ),
               onChanged: (String? newValue) {
-                if (newValue != null) _sortArticles(newValue);
+                newsProvider.sortArticles(newValue!);
               },
               items: sortOptions.map((option) {
                 return DropdownMenuItem(value: option, child: Text(option));
@@ -103,13 +90,110 @@ class HomePageState extends State<HomePage> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
                 (context, index) {
-              return NewsCardWidget(article: _displayedArticles[index]);
+              return NewsCardWidget(article: newsProvider.displayedArticles[index]);
             },
-            childCount: _displayedArticles.length,
+            childCount: newsProvider.displayedArticles.length,
           ),
         ),
       ],
     );
   }
 }
+
+
+// import 'package:flutter/material.dart';
+// import 'package:coursework1_partb_mad/widgets/newscard.dart';
+// import 'package:coursework1_partb_mad/Model/article_model.dart';
+// import 'bookmark_view.dart';
+// import 'package:coursework1_partb_mad/view/search_view.dart';
+// import 'package:coursework1_partb_mad/view/category_view.dart';
+// import 'package:coursework1_partb_mad/view/catogorygrid_view.dart';
+// import 'package:provider/provider.dart';
+// import 'package:coursework1_partb_mad/providers/news_provider.dart';
+//
+// class HomePage extends StatelessWidget {
+//   final List<Article> articles;
+//
+//   const HomePage({Key? key, required this.articles}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ChangeNotifierProvider(
+//       create: (_) => NewsProvider()..initializeArticles(articles),
+//       child: _HomePageBody(),
+//     );
+//   }
+// }
+//
+// class _HomePageBody extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final newsProvider = Provider.of<NewsProvider>(context);
+//
+//     List<Widget> pages = [
+//       _buildNewsList(context),
+//       BookmarksPage(),
+//       SearchPage(),
+//       CategoryGridPage(),
+//     ];
+//
+//     return Scaffold(
+//       body: pages[Provider.of<NewsProvider>(context).currentIndex],
+//       bottomNavigationBar: BottomNavigationBar(
+//         currentIndex: newsProvider.currentIndex,
+//         onTap: (index) => newsProvider.updateCurrentIndex(index),
+//         backgroundColor: Colors.black,
+//         selectedItemColor: Colors.grey,
+//         unselectedItemColor: Colors.grey,
+//         items: const [
+//           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+//           BottomNavigationBarItem(icon: Icon(Icons.bookmark), label: 'Bookmarks'),
+//           BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+//           BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Category'),
+//         ],
+//       ),
+//     );
+//   }
+//
+//   Widget _buildNewsList(BuildContext context) {
+//     final newsProvider = Provider.of<NewsProvider>(context);
+//
+//     return CustomScrollView(
+//       slivers: [
+//         SliverAppBar(
+//           title: const Text('News App'),
+//           floating: true,
+//           pinned: false,
+//           snap: true,
+//           actions: [
+//             DropdownButton<String>(
+//               value: null,
+//               hint: const Row(
+//                 children: [
+//                   Icon(Icons.sort, color: Colors.white),
+//                   SizedBox(width: 10),
+//                   Text("Sort", style: TextStyle(color: Colors.black)),
+//                 ],
+//               ),
+//               onChanged: (String? newValue) {
+//                 if (newValue != null) newsProvider.sortArticles(newValue);
+//               },
+//               items: ['Alphabetical', 'Newest', 'Oldest'].map((option) {
+//                 return DropdownMenuItem(value: option, child: Text(option));
+//               }).toList(),
+//             ),
+//           ],
+//         ),
+//         SliverList(
+//           delegate: SliverChildBuilderDelegate(
+//                 (context, index) {
+//               return NewsCardWidget(article: newsProvider.displayedArticles[index]);
+//             },
+//             childCount: newsProvider.displayedArticles.length,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
