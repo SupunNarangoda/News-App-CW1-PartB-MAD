@@ -31,7 +31,7 @@ class HomePageChild extends StatelessWidget {
     final newsProvider = Provider.of<NewsProvider>(context);
 
     List<Widget> pages = [
-      _buildNewsList(context),
+      buildNewsList(context),
       BookmarksPage(),
       // SearchPage(articles: widget.articles),
       SearchPage(),
@@ -59,7 +59,7 @@ class HomePageChild extends StatelessWidget {
   }
 
 
-  Widget _buildNewsList(context) {
+  Widget buildNewsList(context) {
     final newsProvider = Provider.of<NewsProvider>(context);
     return CustomScrollView(
       slivers: [
