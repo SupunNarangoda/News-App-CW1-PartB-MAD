@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:coursework1_partb_mad/Model/category_model.dart';
 import 'package:coursework1_partb_mad/view/category_view.dart';
-import '../services/category_controller.dart';
+import 'package:coursework1_partb_mad/controllers/category_controller.dart';
 
 class CategoryGridPage extends StatelessWidget {
   @override

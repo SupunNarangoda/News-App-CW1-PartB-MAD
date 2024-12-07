@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:coursework1_partb_mad/services/bookmark_controller.dart';
+import 'package:coursework1_partb_mad/controllers/bookmark_controller.dart';
 import 'package:coursework1_partb_mad/Model/article_model.dart';
 import 'package:coursework1_partb_mad/widgets/newscard.dart';
 

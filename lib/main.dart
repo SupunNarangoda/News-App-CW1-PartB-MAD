@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:coursework1_partb_mad/Model/article_model.dart';
-import 'package:coursework1_partb_mad/services/article_controller.dart';
+import 'package:coursework1_partb_mad/controllers/article_controller.dart';
 import 'package:coursework1_partb_mad/widgets/newscard.dart';
 import 'package:coursework1_partb_mad/view/homepage.dart';
 import 'view/newsdetails_view.dart';
