@@ -9,10 +9,10 @@ class CategoryNewsPage extends StatefulWidget {
   CategoryNewsPage({required this.categoryName});
 
   @override
-  _CategoryNewsPageState createState() => _CategoryNewsPageState();
+  CategoryNewsPageState createState() => CategoryNewsPageState();
 }
 
-class _CategoryNewsPageState extends State<CategoryNewsPage> {
+class CategoryNewsPageState extends State<CategoryNewsPage> {
   late Future<List<Article>> _articlesFuture;
   final ApiService _apiService = ApiService();
 

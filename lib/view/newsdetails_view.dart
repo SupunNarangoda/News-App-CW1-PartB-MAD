@@ -16,15 +16,13 @@ class NewsDescriptionPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Display the article image or a placeholder
             Image.network(
-              article.urlToImage ?? 'https://via.placeholder.com/150',
+              article.urlToImage ?? 'https://coffective.com/wp-content/uploads/2018/06/default-featured-image.png.jpg',
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
             ),
             const SizedBox(height: 10),
-            // Show the title of the article
             Text(
               article.title,
               style: const TextStyle(
@@ -33,7 +31,6 @@ class NewsDescriptionPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            // Show the author if available
             if (article.author != null)
               Text(
                 'Author: ${article.author}',
@@ -43,13 +40,11 @@ class NewsDescriptionPage extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 10),
-            // Show the article content
             Text(
               article.content ?? 'Content not available',
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 10),
-            // Show the article description
             Text(
               article.description ?? 'Description not available',
               style: const TextStyle(fontSize: 14, color: Colors.grey),

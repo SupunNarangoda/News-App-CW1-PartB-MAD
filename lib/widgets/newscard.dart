@@ -11,10 +11,10 @@ class NewsCardWidget extends StatefulWidget {
   static List<Article> bookmarkedArticles = [];
 
   @override
-  _NewsCardWidgetState createState() => _NewsCardWidgetState();
+  NewsCardWidgetState createState() => NewsCardWidgetState();
 }
 
-class _NewsCardWidgetState extends State<NewsCardWidget> {
+class NewsCardWidgetState extends State<NewsCardWidget> {
   // bool get isBookmarked => NewsCardWidget.bookmarkedArticles.contains(widget.article);
   final BookmarkController _bookmarkController = BookmarkController();
   bool isBookmarked = false;
@@ -22,10 +22,10 @@ class _NewsCardWidgetState extends State<NewsCardWidget> {
   @override
   void initState() {
     super.initState();
-    _checkIfBookmarked();
+    checkIfBookmarked();
   }
 
-  Future<void> _checkIfBookmarked() async {
+  Future<void> checkIfBookmarked() async {
     final result = await _bookmarkController.isBookmarked(widget.article.title);
     setState(() {
       isBookmarked = result;

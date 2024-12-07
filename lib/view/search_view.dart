@@ -7,11 +7,11 @@ class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
 
   @override
-  State<SearchPage> createState() => _SearchPageState();
+  State<SearchPage> createState() => SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
-  final ApiService _apiService = ApiService();
+class SearchPageState extends State<SearchPage> {
+  final ApiService apiService = ApiService();
   String _searchQuery = '';
   late Future<List<Article>> _searchedArticlesFuture;
 
@@ -25,7 +25,7 @@ class _SearchPageState extends State<SearchPage> {
     setState(() {
       _searchQuery = query.trim();
       _searchedArticlesFuture = _searchQuery.isNotEmpty
-          ? _apiService.getSearchedArticles(_searchQuery)
+          ? apiService.getSearchedArticles(_searchQuery)
           : Future.value([]);
     });
   }

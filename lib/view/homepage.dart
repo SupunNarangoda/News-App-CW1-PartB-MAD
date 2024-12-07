@@ -13,11 +13,11 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.articles});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
+class HomePageState extends State<HomePage> {
+  int currentIndex = 0;
   late List<Article> _displayedArticles;
 
   @override
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
   }
 
 
-  final List<String> _sortOptions = ['Alphabetical', 'Newest', 'Oldest'];
+  final List<String> sortOptions = ['Alphabetical', 'Newest', 'Oldest'];
 
   @override
   Widget build(BuildContext context) {
@@ -55,10 +55,10 @@ class _HomePageState extends State<HomePage> {
     ];
 
     return Scaffold(
-      body: pages[_currentIndex],
+      body: pages[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
         backgroundColor: Colors.black, // Set the background color to black
         selectedItemColor: Colors.grey, // Set selected item color for contrast
         unselectedItemColor: Colors.grey, // Set unselected item color for visibility
@@ -94,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               onChanged: (String? newValue) {
                 if (newValue != null) _sortArticles(newValue);
               },
-              items: _sortOptions.map((option) {
+              items: sortOptions.map((option) {
                 return DropdownMenuItem(value: option, child: Text(option));
               }).toList(),
             ),
