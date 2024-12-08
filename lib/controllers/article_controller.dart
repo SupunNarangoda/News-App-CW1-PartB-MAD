@@ -5,7 +5,7 @@ import 'package:coursework1_partb_mad/Model/article_model.dart';
 class ApiService {
 
   Future<List<Article>> getArticles() async {
-    const String endPoint = "https://newsapi.org/v2/top-headlines?country=us&apiKey=616d48e0ce8b490a89a57a29db681fc4";
+    const String endPoint = 'https://newsapi.org/v2/top-headlines?country=us&apiKey=616d48e0ce8b490a89a57a29db681fc4';
     final response = await http.get(Uri.parse(endPoint));
 
     if (response.statusCode == 200) {
@@ -43,7 +43,7 @@ class ApiService {
           try {
             data.add(Article.fromJson(item));
           } catch (e) {
-            print('Failed to parse article: $e');
+            print('Failed to add article: $e');
           }
         }
       }
@@ -68,7 +68,7 @@ class ApiService {
           try {
             data.add(Article.fromJson(item));
           } catch (e) {
-            print('Failed to parse article: $e');
+            print('Failed to add article: $e');
           }
         }
       }

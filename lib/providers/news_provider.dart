@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:coursework1_partb_mad/Model/article_model.dart';
 
 class NewsProvider with ChangeNotifier {
-  List<Article> articles = [];
+  List<Article> _articles = [];
   List<Article> _displayedArticles = [];
   int currentIndex = 0;
 
@@ -10,7 +10,7 @@ class NewsProvider with ChangeNotifier {
   List<Article> get displayedArticles => _displayedArticles;
 
   void initializeArticles(List<Article> articles) {
-    articles = articles;
+    _articles = articles;
     _displayedArticles = List.from(articles);
     notifyListeners();
   }
